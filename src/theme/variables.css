@@ -1,0 +1,108 @@
+/* Ionic Variables and Theming for PahamTukang */
+/* Modern Workshop / Clean Light Craftsman Theme (Default) */
+
+:root {
+  --ion-font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', var(--ion-font-family);
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Primary Brand: Craftsman Safety Amber (High contrast on light bg) */
+  --ion-color-primary: #d97706;
+  --ion-color-primary-rgb: 217, 119, 6;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #b45309;
+  --ion-color-primary-tint: #f59e0b;
+
+  /* Secondary: Industrial Steel Blue */
+  --ion-color-secondary: #0284c7;
+  --ion-color-secondary-rgb: 2, 132, 199;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0369a1;
+  --ion-color-secondary-tint: #0ea5e9;
+
+  /* Success / Safe: Safety Emerald */
+  --ion-color-success: #059669;
+  --ion-color-success-rgb: 5, 150, 105;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #047857;
+  --ion-color-success-tint: #10b981;
+
+  /* Warning: Alert Amber */
+  --ion-color-warning: #d97706;
+  --ion-color-warning-rgb: 217, 119, 6;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #b45309;
+  --ion-color-warning-tint: #f59e0b;
+
+  /* Danger: Hazard Red */
+  --ion-color-danger: #dc2626;
+  --ion-color-danger-rgb: 220, 38, 38;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #b91c1c;
+  --ion-color-danger-tint: #ef4444;
+
+  /* LIGHT THEME BASE (DEFAULT) */
+  --ion-background-color: #f8fafc;
+  --ion-background-color-rgb: 248, 250, 252;
+  --ion-text-color: #0f172a;
+  --ion-text-color-rgb: 15, 23, 42;
+
+  --ion-item-background: #ffffff;
+  --ion-card-background: #ffffff;
+  --ion-toolbar-background: #ffffff;
+  --ion-tab-bar-background: #ffffff;
+  --ion-border-color: #e2e8f0;
+
+  /* Custom Workshop Tokens (Light Theme) */
+  --pt-canvas: #f8fafc;
+  --pt-surface-1: #ffffff;
+  --pt-surface-2: #f1f5f9;
+  --pt-surface-3: #e2e8f0;
+  --pt-surface-glass: rgba(255, 255, 255, 0.92);
+  --pt-border: #e2e8f0;
+  --pt-border-focus: #d97706;
+  --pt-text-main: #0f172a;
+  --pt-text-muted: #475569;
+  --pt-amber: #d97706;
+  --pt-amber-glow: rgba(217, 119, 6, 0.15);
+  --pt-cyan: #0284c7;
+  --pt-wood: #b45309;
+  --pt-emerald: #059669;
+  --pt-danger: #dc2626;
+
+  --pt-radius-sm: 8px;
+  --pt-radius-md: 14px;
+  --pt-radius-lg: 20px;
+  --pt-radius-full: 9999px;
+  --pt-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+}
+
+/* Optional Dark Theme (via .dark-theme class if user ever switches) */
+body.dark-theme {
+  --ion-background-color: #0b0f19;
+  --ion-background-color-rgb: 11, 15, 25;
+  --ion-text-color: #f1f5f9;
+  --ion-text-color-rgb: 241, 245, 249;
+
+  --ion-item-background: #131d2e;
+  --ion-card-background: #111a2b;
+  --ion-toolbar-background: #0d1424;
+  --ion-tab-bar-background: #0d1424;
+  --ion-border-color: #1e293b;
+
+  --pt-canvas: #0b0f19;
+  --pt-surface-1: #111a2b;
+  --pt-surface-2: #182338;
+  --pt-surface-3: #1e293b;
+  --pt-surface-glass: rgba(17, 26, 43, 0.85);
+  --pt-border: rgba(255, 255, 255, 0.08);
+  --pt-text-main: #f8fafc;
+  --pt-text-muted: #94a3b8;
+  --pt-amber: #f59e0b;
+  --pt-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
+}

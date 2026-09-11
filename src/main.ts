@@ -1,0 +1,43 @@
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import { IonicVue } from '@ionic/vue';
+
+/* Core CSS required for Ionic components to work properly */
+import '@ionic/vue/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+import '@ionic/vue/css/normalize.css';
+import '@ionic/vue/css/structure.css';
+import '@ionic/vue/css/typography.css';
+
+/* Optional CSS utils that can be commented out */
+import '@ionic/vue/css/padding.css';
+import '@ionic/vue/css/float-elements.css';
+import '@ionic/vue/css/text-alignment.css';
+import '@ionic/vue/css/text-transformation.css';
+import '@ionic/vue/css/flex-utils.css';
+import '@ionic/vue/css/display.css';
+
+/* Theme and Custom Design System */
+import './theme/variables.css';
+import './theme/main.css';
+
+/* IndexedDB Dexie Seeder */
+import { initDatabase } from './services/db';
+
+async function bootstrap() {
+  await initDatabase();
+
+  const app = createApp(App)
+    .use(IonicVue, {
+      mode: 'md', // Material Design mode for clean workshop feel across all platforms
+    })
+    .use(router);
+
+  router.isReady().then(() => {
+    app.mount('#app');
+  });
+}
+
+bootstrap();

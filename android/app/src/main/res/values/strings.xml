@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PahamTukang</string>
+    <string name="title_activity_main">PahamTukang</string>
+    <string name="package_name">com.pahamtukang.app</string>
+    <string name="custom_url_scheme">com.pahamtukang.app</string>
+</resources>
