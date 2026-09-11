@@ -37,7 +37,13 @@ ion-content,
 .troubleshoot-content,
 .myprojects-content {
   --background: var(--pt-canvas);
+  --padding-bottom: 65px;
 }
+
+.home-content {
+  --padding-bottom: 40px;
+}
+
 
 .text-amber {
   color: #d97706;
@@ -61,16 +67,19 @@ ion-content,
 
 .pt-grid-cards,
 .logs-grid,
-.symptoms-grid {
+.symptoms-grid,
+.projects-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
+  margin-top: 16px;
 }
 
 @media (min-width: 640px) {
   .pt-grid-cards,
   .logs-grid,
-  .symptoms-grid {
+  .symptoms-grid,
+  .projects-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
@@ -82,6 +91,7 @@ ion-content,
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
+
 }
 
 .pt-grid-2,
