@@ -1,6 +1,13 @@
-export type ProjectCategory = 'LST' | 'SAN' | 'KAY';
+export type ProjectCategory = 'LST' | 'SAN' | 'KAY' | 'KNS';
 
 export type DifficultyLevel = 'Pemula' | 'Menengah' | 'Mahir';
+
+export interface SNIStandardReference {
+  code: string;       // Contoh: "SNI 03-2835-2002" atau "PUIL 2020"
+  title: string;      // Contoh: "Tata Cara Pengerjaan Plesteran & Acian Dinding"
+  clause?: string;    // Contoh: "Pasal 4.2 Rasio 1:4"
+  summary: string;    // Keterangan praktis untuk tukang
+}
 
 export interface MandatorySafetyCheckItem {
   id: string;
@@ -24,6 +31,7 @@ export interface MaterialItem {
   unit: string;
   estimatedPriceUnit: number; // in IDR
   note?: string;
+  sniStandard?: string;       // Contoh: "SNI 2049:2015 Semen PCC"
 }
 
 export interface CalculatorParam {
@@ -38,10 +46,19 @@ export interface CalculatorParam {
 }
 
 export interface CalculatorConfig {
-  formulaType: 'electrical_cable' | 'plumbing_pipe' | 'floating_shelf' | 'door_repair';
+  formulaType: 
+    | 'electrical_cable' 
+    | 'plumbing_pipe' 
+    | 'floating_shelf' 
+    | 'door_repair'
+    | 'wall_plaster_ahsp'
+    | 'hebel_aac_block'
+    | 'concrete_k175_mix'
+    | 'electrical_load_puil';
   title: string;
   description: string;
   parameters: CalculatorParam[];
+  sniReference?: SNIStandardReference;
 }
 
 export interface ProjectStep {
@@ -51,6 +68,7 @@ export interface ProjectStep {
   schematicId?: string;
   proTip?: string;
   dangerWarning?: string;
+  sniNote?: string;
   checkItems: string[];
 }
 
@@ -71,6 +89,7 @@ export interface DIYProject {
   durationMinutes: number;
   overview: string;
   tags: string[];
+  sniStandards?: SNIStandardReference[];
   safetyHazards: string[];
   mandatorySafetyChecklist: MandatorySafetyCheckItem[];
   tools: ToolItem[];
@@ -92,6 +111,7 @@ export interface MyProjectLog {
   totalCost: number; // in IDR
   userNotes: string;
   photoData?: string; // base64 string
+  beforePhotoData?: string; // base64 foto sebelum perbaikan
   rating?: number;
   completedSteps: number[];
 }

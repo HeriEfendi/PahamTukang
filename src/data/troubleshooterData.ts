@@ -416,5 +416,123 @@ export const TROUBLESHOOTER_TREES: TroubleshooterTree[] = [
         }
       }
     }
+  },
+
+  // --- KONSTRUKSI & DINDING (KNS) ---
+  {
+    id: 'tree-wall-crack-eval',
+    category: 'KNS',
+    title: 'Dinding Tembok Retak (Rambut vs Retak Struktur Pondasi)',
+    symptom: 'Muncul garis retakan pada plesteran dinding tembok kamar atau ruang tamu.',
+    initialNodeId: 'qc1',
+    nodes: {
+      qc1: {
+        id: 'qc1',
+        question: 'Berapa perkiraan lebar celah retakan dan bentuk polanya?',
+        options: [
+          { text: 'Retak tipis < 1 mm, berpola acak seperti jaring laba-laba (pecah seribu)', nextNodeId: 'res-hairline-crack' },
+          { text: 'Retak lurus tegas > 2 mm atau pola diagonal miring dari sudut kusen', nextNodeId: 'qc2' }
+        ]
+      },
+      qc2: {
+        id: 'qc2',
+        question: 'Apakah retakan tersebut tembus hingga ke sisi luar tembok sebaliknya atau pintu/jendela menjadi seret?',
+        options: [
+          { text: 'Ya, tembus ke dua sisi dan kusen pintu ikut melorot miring', nextNodeId: 'res-structural-crack' },
+          { text: 'Tidak tembus, hanya pada lapisan semen plesteran satu sisi', nextNodeId: 'res-plaster-debond' }
+        ]
+      },
+      'res-hairline-crack': {
+        id: 'res-hairline-crack',
+        result: {
+          cause: 'Retak Rambut Termal (Penyusutan Acian Semen Cepat Kering)',
+          dangerLevel: 'AMAN',
+          safetyInstruction: 'Retak rambut adalah fenomena kosmetik non-struktural.',
+          recommendations: [
+            'Buka sedikit celah dengan kape atau amplas halus No. 150.',
+            'Aplikasikan plamir tembok elastis (acrylic wall putty) atau semen instan acian elastis.',
+            'Gunakan cat dasar alkali resistant sealer sebelum mengecat ulang.',
+            'Sesuai SNI: Pastikan acian selalu dirawat basah (curing) 2-3 hari saat pengerjaan plesteran baru.'
+          ],
+          suggestedProjectSlug: 'perbaikan-dinding-retak-plester-aci'
+        }
+      },
+      'res-plaster-debond': {
+        id: 'res-plaster-debond',
+        result: {
+          cause: 'Lepas Rekatan Plesteran Akibat Dinding Bata Kering Saat Pengerjaan',
+          dangerLevel: 'WASPADA',
+          safetyInstruction: 'Waspadai plesteran yang berongga (kopong) rontok menimpa anak-anak.',
+          recommendations: [
+            'Ketuk dinding dengan gagang obeng; bila bersuara kopong, plesteran lepas dari bata.',
+            'Gunakan pahat untuk membuka alur celah huruf V selebar 1.5 cm.',
+            'Kuas cairan bonding agent perekat beton ke celah alur.',
+            'Isi kembali dengan adukan plester standar SNI 1 PC : 4 PP.',
+            'Finishing dengan acian halus tebal 1.5 mm.'
+          ],
+          suggestedProjectSlug: 'perbaikan-dinding-retak-plester-aci'
+        }
+      },
+      'res-structural-crack': {
+        id: 'res-structural-crack',
+        result: {
+          cause: 'Retak Struktur Akibat Penurunan Pondasi atau Gempa Bumi',
+          dangerLevel: 'BAHAYA',
+          safetyInstruction: 'JANGAN HANYA MENAMBAL RETAK DENGAN SEMEN! Pondasi atau sloof bawah sedang mengalami pergeseran diferensial.',
+          recommendations: [
+            'Pasang pita kaca pengukur retak (glass tell-tale) untuk memantau apakah retak terus bertambah lebar.',
+            'Konsultasikan segera dengan kontraktor sipil berlisensi atau arsitek.',
+            'Perlu perkuatan kolom praktis tambahan (jacketing) atau penyuntikan epoxy beton bertekanan tinggi (pressure injection).'
+          ],
+          suggestedProjectSlug: 'pengecoran-kolom-praktis-beton-k175'
+        }
+      }
+    }
+  },
+  {
+    id: 'tree-concrete-leak',
+    category: 'KNS',
+    title: 'Dak Beton Talang Air Rembes & Menetes ke Plafon',
+    symptom: 'Plafon gypsum bernoda cokelat basah atau ada tetesan air saat hujan deras dari arah dak beton.',
+    initialNodeId: 'qd1',
+    nodes: {
+      qd1: {
+        id: 'qd1',
+        question: 'Di mana titik rembesan paling parah terlihat pada dak atas?',
+        options: [
+          { text: 'Pada pertemuan sudut 90° antara lantai dak dan dinding tembok pembatas', nextNodeId: 'res-corner-joint-leak' },
+          { text: 'Ada genangan air banjir di lantai dak karena kemiringan ke pipa buang kurang miring', nextNodeId: 'res-ponding-slope-leak' }
+        ]
+      },
+      'res-corner-joint-leak': {
+        id: 'res-corner-joint-leak',
+        result: {
+          cause: 'Sobeknya Lapisan Cat Anti Bocor di Sudut Mati 90 Derajat',
+          dangerLevel: 'WASPADA',
+          safetyInstruction: 'Matikan aliran listrik lampu plafon di bawah titik tetesan air sebelum memeriksa atap.',
+          recommendations: [
+            'Kerok lapisan cat lama yang terkelupas dan lumut hitam sampai bersih.',
+            'Buat plesteran sudut tumpul (chamfer / fillet 45 derajat) sepanjang sudut 90° sesuai SNI.',
+            'Tanam serat kain kasa polyester mesh di antara lapisan cat waterproofing basah.',
+            'Lapisi 3 lapis sistem silang arah melintang.'
+          ],
+          suggestedProjectSlug: 'waterproofing-dak-beton-nok-genteng'
+        }
+      },
+      'res-ponding-slope-leak': {
+        id: 'res-ponding-slope-leak',
+        result: {
+          cause: 'Genangan Air Akibat Kemiringan Dak Kurang dari 1% - 2%',
+          dangerLevel: 'WASPADA',
+          safetyInstruction: 'Air yang menggenang berhari-hari akan menembus beton sekuat apa pun.',
+          recommendations: [
+            'Bersihkan saringan roof drain dari sumbatan daun dan kotoran.',
+            'Buat plesteran kemiringan ulang (screeding) ke arah pipa pembuangan minimal 1-2 cm per meter panjang.',
+            'Setelah screed kering, aplikasikan waterproofing semen slurry 2 komponen fleksibel.'
+          ],
+          suggestedProjectSlug: 'waterproofing-dak-beton-nok-genteng'
+        }
+      }
+    }
   }
 ];

@@ -31,12 +31,9 @@ export async function initDatabase(): Promise<void> {
       await db.projects.bulkAdd(INITIAL_PROJECTS);
       console.log('Seeding complete! Added', INITIAL_PROJECTS.length, 'projects.');
     } else {
-      // Periksa apakah ada proyek baru dari data lokal yang belum masuk
+      // Sinkronisasi proyek katalog terbaru ke database lokal
       for (const p of INITIAL_PROJECTS) {
-        const existing = await db.projects.get(p.id);
-        if (!existing) {
-          await db.projects.put(p);
-        }
+        await db.projects.put(p);
       }
     }
   } catch (err) {

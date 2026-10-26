@@ -807,5 +807,389 @@ export const INITIAL_PROJECTS: DIYProject[] = [
         type: 'svg_schematic'
       }
     ]
+  },
+  {
+    id: 'kns-01',
+    slug: 'perbaikan-dinding-retak-plester-aci',
+    title: 'Perbaikan Retak Dinding & Plesteran Ulang Standar SNI',
+    category: 'KNS',
+    categoryName: 'Konstruksi & Dinding',
+    difficulty: 'Pemula',
+    durationMinutes: 90,
+    overview: 'Panduan standar PU-SDA dan SNI 03-2835 untuk mengatasi retak rambut dan retak plesteran dinding tembok. Meliputi pembukaan celah alur V, aplikasi bonding agent perekat, serta adukan plester 1:4 dan acian halus anti-retak.',
+    tags: ['Dinding Retak', 'Plesteran Dinding', 'Acian Semen', 'SNI 03-2835', 'Semen Instan'],
+    sniStandards: [
+      {
+        code: 'SNI 03-2835-2002',
+        title: 'Tata Cara Perhitungan Harga Satuan Pekerjaan Tanah, Pasangan dan Plesteran',
+        clause: 'Pasal 6.4 Plesteran 1 PC : 4 PP tebal 15mm',
+        summary: 'Adukan plesteran dinding batu bata/hebel standar menggunakan perbandingan 1 volume semen PC berbanding 4 pasir pasang ayak halus.'
+      },
+      {
+        code: 'SNI 03-6882-2014',
+        title: 'Spesifikasi Mortar untuk Pekerjaan Unit Pasangan',
+        summary: 'Adukan acian wajib dirawat lembap (curing) selama 24 jam untuk menghindari dehidrasi cepat penyebab retak rambut.'
+      }
+    ],
+    safetyHazards: [
+      'Debu partikel silika semen dan serpihan tembok dapat melukai kornea mata saat memahat.',
+      'Sifat semen yang alkalis tinggi (pH 12-13) menyebabkan iritasi kulit tangan dan luka bakar kimia jika kontak lama.'
+    ],
+    mandatorySafetyChecklist: [
+      {
+        id: 'safe-eye-respirator',
+        text: 'Kenakan Kacamata Pelindung (Safety Goggles) & Masker Partikel',
+        detail: 'Wajib melindungi mata dari serpihan pahat plesteran dan paru-paru dari debu silika semen.',
+        critical: true
+      },
+      {
+        id: 'safe-rubber-gloves',
+        text: 'Gunakan Sarung Tangan Karet Nitril / Tahan Bahan Kimia',
+        detail: 'Cegah kontak langsung kulit dengan pasta semen basah yang bersifat korosif.',
+        critical: true
+      }
+    ],
+    tools: [
+      { id: 't-roskam', name: 'Roskam Besi & Roskam Busa/Karet', required: true, specification: 'Bilah baja anti karat untuk meratakan acian' },
+      { id: 't-cetok', name: 'Cetok / Sendok Semen Oval 6-7 Inch', required: true },
+      { id: 't-pahat-palu', name: 'Pahat Beton & Palu 0.5 kg', required: true, specification: 'Untuk membuka alur retak' },
+      { id: 't-kuas-air', name: 'Kuas Cat 3 Inch & Ember Cor', required: true, specification: 'Untuk membasahi alur retak dinding' },
+      { id: 't-jidar', name: 'Jidar Aluminium / Kasur Perata 1.5 - 2 Meter', required: false, specification: 'Pemeriksa kedataran bidang' }
+    ],
+    materials: [
+      { id: 'm-semen-pc', name: 'Semen Portland Komposit (PCC) 40/50 kg', defaultQty: 1, unit: 'sak', estimatedPriceUnit: 58000, sniStandard: 'SNI 2049:2015' },
+      { id: 'm-pasir-pasang', name: 'Pasir Pasang Ayak Halus (Bebas Lumpur)', defaultQty: 2, unit: 'karung', estimatedPriceUnit: 18000, sniStandard: 'SNI 03-4142' },
+      { id: 'm-semen-instan-aci', name: 'Semen Instan Acian Siap Pakai (Mortar)', defaultQty: 1, unit: 'sak 40kg', estimatedPriceUnit: 75000, sniStandard: 'SNI 8640' },
+      { id: 'm-bonding-agent', name: 'Cairan Perekat Beton (Bonding Agent / Lem Calbond)', defaultQty: 1, unit: 'liter', estimatedPriceUnit: 48000 },
+      { id: 'm-amplas-halus', name: 'Kertas Amplas Dinding No. 180 & 240', defaultQty: 3, unit: 'lembar', estimatedPriceUnit: 5000 }
+    ],
+    calculatorConfig: {
+      formulaType: 'wall_plaster_ahsp',
+      title: 'Kalkulator Kebutuhan Plester & Aci Dinding (SNI AHSP)',
+      description: 'Menghitung volume kebutuhan zak semen, pasir pasang, dan semen acian berdasarkan luas dinding (m²) dan tebal adukan standar SNI.',
+      parameters: [
+        { id: 'wall_area', label: 'Luas Dinding yang Diplester / Diaci (m²)', min: 1, max: 100, step: 1, defaultValue: 12, unit: 'm²' },
+        { id: 'plaster_thickness', label: 'Tebal Plesteran Standar SNI (mm)', min: 10, max: 25, step: 1, defaultValue: 15, unit: 'mm', tooltip: 'SNI 03-2835 menetapkan tebal standar 15 mm' },
+        { id: 'mortar_ratio', label: 'Rasio Adukan (1=Kedap Air 1:3, 2=Standar 1:4, 3=Partisi 1:5)', min: 1, max: 3, step: 1, defaultValue: 2, unit: 'mode', tooltip: 'Pilih 2 untuk rasio standar 1 Semen : 4 Pasir' }
+      ]
+    },
+    steps: [
+      {
+        stepNumber: 1,
+        title: 'Identifikasi Retak & Pembukaan Celah Alur Huruf "V"',
+        description: 'Periksa arah retak. Jika retak selebar > 1 mm, gunakan pahat pelat dan palu untuk memperlebar jalur retakan membentuk alur huruf "V" sedalam 1 - 1.5 cm. Trik ini memberi ruang cengkeraman mekanik bagi pasta tambalan baru.',
+        schematicId: 'schematic-wall-crack-v',
+        proTip: 'Jangan menambal langsung di atas retak tipis dengan semen atau dempul tanpa membuka alur V; tambalan akan terlepas kembali dalam hitungan minggu.',
+        dangerWarning: 'Waspadai retak tembus diagonal yang lebar (> 5 mm) dari sudut kusen ke plafon; ini tanda penurunan pondasi struktur yang membutuhkan evaluasi arsitek/teknisi sipil.',
+        checkItems: ['Alur retak dipahat berbentuk parit huruf V', 'Debu dan serpihan rontokan disikat bersih']
+      },
+      {
+        stepNumber: 2,
+        title: 'Pembersihan & Pembasahan Jenuh (Curing Awal)',
+        description: 'Bersihkan semua debu dan butiran lepas menggunakan kuas basah. Semprotkan air bersih ke alur retak hingga dinding berada pada kondisi SSD (Saturated Surface Dry / jenuh air permukaan kering). Kuaskan larutan bonding agent perekat semen tipis-tipis.',
+        sniNote: 'SNI Mensyaratkan bata/tembok wajib disiram jenuh sebelum diplester agar air adukan semen tidak diserap paksa oleh dinding bata kering.',
+        checkItems: ['Permukaan lembap merata tanpa genangan air menetes', 'Bonding agent dioleskan merata']
+      },
+      {
+        stepNumber: 3,
+        title: 'Pengisian Plesteran Rasio SNI 1 PC : 4 PP',
+        description: 'Campurkan 1 bagian semen Portland dengan 4 bagian pasir pasang halus yang sudah diayak. Tambahkan air secukupnya hingga pulen (slump kental). Masukkan adukan ke alur V menggunakan cetok sambil ditekan padat agar tidak berongga. Ratakan permukaan 1-2 mm di bawah level cat dinding lama.',
+        schematicId: 'schematic-wall-crack-v',
+        checkItems: ['Adukan padat tanpa rongga udara di dalam celah', 'Permukaan digores sedikit agar acian merekat kuat']
+      },
+      {
+        stepNumber: 4,
+        title: 'Aplikasi Acian Halus & Perataan Roskam Baja',
+        description: 'Setelah plesteran mengeras (24-48 jam), basahi kembali permukaan. Gunakan semen instan acian yang diaduk rata tanpa gumpalan. Oleskan memakai roskam besi dari arah bawah ke atas dengan ketebalan 1.5 - 2 mm. Haluskan permukaan dengan gerakan memutar menggunakan roskam busa setengah lembap.',
+        sniNote: 'Tebal acian standar SNI adalah 1.5 - 2 mm. Acian yang terlalu tebal (> 3 mm) rentan pecah seribu/retak susut.',
+        checkItems: ['Acian merata rata dengan permukaan sekitarnya', 'Tidak ada gelombang saat dicek dengan jidar']
+      },
+      {
+        stepNumber: 5,
+        title: 'Perawatan (Curing) & Pengecatan Akhir',
+        description: 'Percikkan air halus ke acian minimal sekali sehari selama 2-3 hari pertama agar proses hidrasi semen sempurna dan permukaan tidak berdebu. Tunggu dinding benar-benar kering (kadar air < 12% dan pH < 9, biasanya 7-14 hari) sebelum mengaplikasikan wall sealer / primer anti-alkali dan cat akhir.',
+        checkItems: ['Acian keras, padat, dan tidak berbubuk saat diusap tangan', 'Siap dicat dasar primer anti-alkali']
+      }
+    ],
+    diagrams: [
+      {
+        id: 'schematic-wall-crack-v',
+        title: 'Diagram Penampang Pembukaan Alur V & Lapisan Plester Aci',
+        description: 'Visualisasi sudut buka celah 45 derajat alur V, penetrasi bonding agent, dan lapisan plesteran semen SNI 1:4.',
+        type: 'svg_schematic'
+      }
+    ]
+  },
+  {
+    id: 'kns-02',
+    slug: 'pemasangan-dinding-bata-ringan-hebel',
+    title: 'Pemasangan Dinding Bata Ringan (Hebel) Presisi SNI',
+    category: 'KNS',
+    categoryName: 'Konstruksi & Dinding',
+    difficulty: 'Menengah',
+    durationMinutes: 120,
+    overview: 'Teknik memasang bata ringan aerasi (AAC / Hebel) untuk partisi ruangan rumah. Menguasai pembuatan lapisan dasar adukan semen, penggunaan perekat mortar instan thinbed dengan roskam gerigi 6mm, dan pemasangan angkur dinding standar SNI 03-6882.',
+    tags: ['Bata Ringan', 'Hebel', 'Mortar Thinbed', 'Roskam Gerigi', 'Dinding Partisi', 'SNI 8640'],
+    sniStandards: [
+      {
+        code: 'SNI 03-6882-2014 & SNI 8640:2018',
+        title: 'Spesifikasi Mortar Siap Pakai untuk Unit Pasangan Bata Ringan',
+        summary: 'Ketebalan spesi mortar tipis (thinbed) pada sambungan hebel wajib berukuran 2 mm - 3 mm. Penggunaan roskam bergigi wajib untuk menjamin ketebalan merata.'
+      }
+    ],
+    safetyHazards: [
+      'Bata hebel yang jatuh dapat mencederai jari kaki.',
+      'Debu pemotongan hebel dengan gergaji manual/mesin sangat halus dan berbahaya bagi sistem pernapasan.'
+    ],
+    mandatorySafetyChecklist: [
+      {
+        id: 'safe-hebel-ppe',
+        text: 'Pakai Sepatu Safety / Tertutup & Masker Debu Respirator',
+        detail: 'Lindungi kaki dari runtuhan blok bata dan paru-paru dari debu silica hebel.',
+        critical: true
+      }
+    ],
+    tools: [
+      { id: 't-roskam-gerigi', name: 'Roskam Bergigi (Notched Trowel) 6mm', required: true, specification: 'Untuk meratakan ketebalan mortar thinbed 3mm' },
+      { id: 't-waterpass-panjang', name: 'Waterpass Magnetik 60-100 cm', required: true, specification: 'Wajib untuk memastikan tegak vertikal & datar horizontal' },
+      { id: 't-palu-karet', name: 'Palu Karet (Rubber Mallet)', required: true, specification: 'Untuk mengetok hebel tanpa memecahkan pori-pori' },
+      { id: 't-gergaji-hebel', name: 'Gergaji Bata Ringan (Mata Baja Widia)', required: true },
+      { id: 't-benang-lot', name: 'Benang Tukang & Unting-unting (Plumb Bob)', required: true }
+    ],
+    materials: [
+      { id: 'm-hebel-75', name: 'Bata Ringan AAC Tebal 7.5 cm (60 x 20 x 7.5 cm)', defaultQty: 25, unit: 'buah', estimatedPriceUnit: 9000, sniStandard: 'SNI 03-6882' },
+      { id: 'm-mortar-thinbed', name: 'Semen Mortar Instan Perekat Bata Ringan 40 kg', defaultQty: 1, unit: 'sak', estimatedPriceUnit: 72000, sniStandard: 'SNI 8640' },
+      { id: 'm-plat-angkur', name: 'Plat Besi Strip / Angkur Dinding Hebel L-Bracket', defaultQty: 6, unit: 'buah', estimatedPriceUnit: 3500 },
+      { id: 'm-paku-beton', name: 'Paku Beton 5 cm & Sekrup Fischer', defaultQty: 12, unit: 'buah', estimatedPriceUnit: 800 }
+    ],
+    calculatorConfig: {
+      formulaType: 'hebel_aac_block',
+      title: 'Kalkulator Bata Ringan (Hebel) & Semen Instan',
+      description: 'Menghitung jumlah hebel yang dibutuhkan serta sak semen perekat thinbed sesuai luas ruangan.',
+      parameters: [
+        { id: 'wall_length', label: 'Panjang Dinding Partisi (m)', min: 1, max: 20, step: 0.5, defaultValue: 3.5, unit: 'm' },
+        { id: 'wall_height', label: 'Tinggi Dinding (m)', min: 1, max: 5, step: 0.1, defaultValue: 2.8, unit: 'm' },
+        { id: 'block_thickness', label: 'Ketebalan Bata Hebel (1=7.5 cm, 2=10 cm)', min: 1, max: 2, step: 1, defaultValue: 1, unit: 'tipe', tooltip: 'Pilih 1 untuk 7.5 cm (standar interior) atau 2 untuk 10 cm' }
+      ]
+    },
+    steps: [
+      {
+        stepNumber: 1,
+        title: 'Penentuan As Benang & Pasangan Lapisan Pertama (Kunci Utama)',
+        description: 'Tarik benang lurus penanda garis dinding. Bersihkan lantai kerja. PERHATIAN: Baris bata pertama TIDAK menggunakan mortar thinbed, melainkan adukan semen pasir konvensional tebal 2-3 cm (rasio 1:3). Ini berfungsi meratakan ketidakrataan lantai dasar.',
+        schematicId: 'schematic-hebel-mortar',
+        proTip: 'Kunci kesuksesan dinding hebel ada pada baris pertama! Jika baris pertama miring 2 mm, baris ke-10 di atas akan miring hingga 3 cm. Luangkan waktu untuk menyetel waterpass baris pertama sesempurna mungkin.',
+        checkItems: ['Garis benang siku terhadap dinding eksisting', 'Baris bata pertama rata air total diuji dengan waterpass']
+      },
+      {
+        stepNumber: 2,
+        title: 'Aplikasi Mortar Thinbed dengan Roskam Bergigi',
+        description: 'Aduk semen mortar instan dengan air bersih sesuai rasio kemasan (kurang lebih 10 liter air per sak 40 kg). Gunakan roskam bergigi untuk menyapukan mortar secara horizontal sepanjang permukaan atas dan sambungan vertikal bata hebel dengan ketebalan 3 mm.',
+        sniNote: 'SNI melarang adukan thinbed hebel dipasang bertumpuk tebal seperti pasir konvensional karena akan menyusut dan membuat dinding goyang.',
+        checkItems: ['Adukan membentuk alur gerigi teratur', 'Sambungan vertikal antar bata terisi mortar penuh']
+      },
+      {
+        stepNumber: 3,
+        title: 'Pemasangan Bata Blok & Ketukan Palu Karet',
+        description: 'Letakkan blok bata hebel di atas alur mortar. Ketok perlahan dengan palu karet hingga sejajar dengan tarikan benang panduan. Bersihkan lelehan mortar yang meluap ke samping sebelum mengeras. Pasang susunan bata berselang-seling (pola bata ikat / overlapping minimal 15-20 cm antar sambungan vertikal).',
+        schematicId: 'schematic-hebel-mortar',
+        checkItems: ['Bata diketok rapat dengan palu karet', 'Pola sambungan vertikal selang-seling (overlap > 15 cm)']
+      },
+      {
+        stepNumber: 4,
+        title: 'Pemasangan Angkur Pengikat ke Kolom Dinding',
+        description: 'Setiap ketinggian 3 lapis bata (sekitar 60 cm), pasang plat besi angkur strip (L-bracket) yang dipaku beton ke kolom praktis/tembok lama dan disekrup ke bata hebel baru. Angkur ini mencegah dinding roboh akibat getaran gempa bumi.',
+        sniNote: 'Standar Konstruksi Tahan Gempa PUPR mensyaratkan ikatan mekanik angkur besi minimal setiap 60 cm tinggi dinding bata.',
+        checkItems: ['Plat angkur terpasang kencang ke dinding kolom', 'Tertanam rapi dalam alur mortar hebel']
+      }
+    ],
+    diagrams: [
+      {
+        id: 'schematic-hebel-mortar',
+        title: 'Diagram Pemasangan Hebel, Roskam Gerigi & Plat Angkur',
+        description: 'Visualisasi pola susunan bata selang-seling, celah mortar 3mm, dan dudukan angkur penahan gempa.',
+        type: 'svg_schematic'
+      }
+    ]
+  },
+  {
+    id: 'kns-03',
+    slug: 'pengecoran-kolom-praktis-beton-k175',
+    title: 'Pengecoran Kolom Praktis & Sloof Beton Mutu K-175',
+    category: 'KNS',
+    categoryName: 'Konstruksi & Dinding',
+    difficulty: 'Mahir',
+    durationMinutes: 150,
+    overview: 'Standar SNI 2847:2019 untuk membuat campuran adukan beton struktural rumah sederhana (sloof, kolom praktis 11 x 11 cm, dan balok latai). Menghitung rasio takaran ember 1:2:3, pembuatan selimut beton pelindung behel, serta teknik pemadatan anti-keropos.',
+    tags: ['Cor Beton', 'Kolom Praktis', 'Beton K-175', 'Pembesian Behel', 'SNI 2847'],
+    sniStandards: [
+      {
+        code: 'SNI 2847:2019 & SNI 6880:2016',
+        title: 'Persyaratan Beton Struktural untuk Bangunan Gedung',
+        clause: 'Mutu Beton K-175 / fc 14.5 MPa',
+        summary: 'Perbandingan volume takaran lapangan setara K-175 adalah 1 Semen : 2 Pasir Cor : 3 Kerikil/Split pecah mesin. Selimut beton minimum 20 mm.'
+      }
+    ],
+    safetyHazards: [
+      'Besi beton tajam dapat menusuk kulit tangan atau robek terkena kawat bendrat.',
+      'Semen cair basah bersifat kaustik menyebabkan luka bakar semen (cement burn) bila menembus sepatu.'
+    ],
+    mandatorySafetyChecklist: [
+      {
+        id: 'safe-concrete-boots',
+        text: 'Wajib Memakai Sepatu Boots Karet & Sarung Tangan Kulit/Karet',
+        detail: 'Cegah cipratan adukan semen masuk ke dalam sepatu dan luka tusuk kawat bendrat.',
+        critical: true
+      }
+    ],
+    tools: [
+      { id: 't-cangkul-sekop', name: 'Cangkul & Sekop Baja', required: true },
+      { id: 't-ember-cor', name: 'Ember Cor Standar (Volume 10 Liter)', required: true, specification: 'Sebagai takaran takar rasio 1:2:3' },
+      { id: 't-tongkat-pemadat', name: 'Besi Pemadat / Tongkat Kayu Pengetuk', required: true, specification: 'Untuk memadatkan coran dalam bekisting agar tidak keropos' },
+      { id: 't-tang-gegep', name: 'Tang Kakatua (Gegep Potong Kawat)', required: true }
+    ],
+    materials: [
+      { id: 'm-semen-pcc-cor', name: 'Semen Portland PCC 50 kg', defaultQty: 2, unit: 'sak', estimatedPriceUnit: 68000, sniStandard: 'SNI 2049' },
+      { id: 'm-pasir-beton', name: 'Pasir Cor Kasar Hitam (Bebas Lumpur/Organik)', defaultQty: 4, unit: 'karung', estimatedPriceUnit: 22000, sniStandard: 'SNI 03-4142' },
+      { id: 'm-split-batu', name: 'Batu Split / Kerikil Pecah Mesin Ukuran 1-2 cm', defaultQty: 6, unit: 'karung', estimatedPriceUnit: 25000, sniStandard: 'SNI 03-2461' },
+      { id: 'm-besi-tulangan', name: 'Besi Beton Polos dia. 8mm / 10mm SNI', defaultQty: 2, unit: 'batang', estimatedPriceUnit: 52000, sniStandard: 'SNI 2052' },
+      { id: 'm-kawat-bendrat', name: 'Kawat Bendrat Pengikat Behel', defaultQty: 1, unit: 'kg', estimatedPriceUnit: 25000 },
+      { id: 'm-tahu-beton', name: 'Tahu Beton (Spacer Selimut Beton 2 cm)', defaultQty: 10, unit: 'buah', estimatedPriceUnit: 1000 }
+    ],
+    calculatorConfig: {
+      formulaType: 'concrete_k175_mix',
+      title: 'Kalkulator Campuran Beton K-175 (SNI 2847)',
+      description: 'Menghitung volume bahan adukan cor semen, pasir, dan kerikil berdasarkan dimensi panjang, lebar, dan tebal pengecoran.',
+      parameters: [
+        { id: 'concrete_length', label: 'Panjang Kolom / Balok (m)', min: 0.5, max: 20, step: 0.5, defaultValue: 3.0, unit: 'm' },
+        { id: 'concrete_width', label: 'Lebar Kolom / Balok (cm)', min: 10, max: 40, step: 1, defaultValue: 15, unit: 'cm' },
+        { id: 'concrete_thickness', label: 'Tebal / Tinggi Kolom (cm)', min: 10, max: 40, step: 1, defaultValue: 15, unit: 'cm' }
+      ]
+    },
+    steps: [
+      {
+        stepNumber: 1,
+        title: 'Pemasangan Tahu Beton (Spacer) untuk Selimut Beton 20 mm',
+        description: 'Sebelum bekisting ditutup rapat, pasang "tahu beton" (ganjal mortar setebal 2 cm) di sekeliling rangka besi tulangan. Tahu beton menjaga agar besi behel tepat berada di tengah dan terlindungi selimut cor setebal 2 cm dari udara luar.',
+        schematicId: 'schematic-concrete-mix',
+        dangerWarning: 'JANGAN biarkan besi tulangan menempel langsung ke papan bekisting! Besi yang menempel ke permukaan luar akan berkarat dan merusak struktur dalam beberapa tahun.',
+        checkItems: ['Tahu beton terpasang di 4 sisi behel', 'Jarak antar tahu beton maksimal 1 meter']
+      },
+      {
+        stepNumber: 2,
+        title: 'Pencampuran Kering Takaran SNI (1 Semen : 2 Pasir : 3 Split)',
+        description: 'Gunakan ember cor yang sama sebagai acuan volume: Tuangkan 1 ember semen, 2 ember pasir cor kasar, dan 3 ember batu split. Aduk material kering tersebut dengan cangkul/sekop hingga warnanya homogen merata sebelum diberi air.',
+        sniNote: 'Rasio 1:2:3 adalah standar perbandingan volume lapangan SNI untuk menghasilkan beton mutu K-175 (~14.5 MPa).',
+        checkItems: ['Takaran diukur dengan ember cor seragam', 'Campuran kering tercampur rata tanpa kantong pasir terpisah']
+      },
+      {
+        stepNumber: 3,
+        title: 'Penambahan Air Terkontrol (Faktor Air Semen / FAS)',
+        description: 'Buat cekungan di tengah tumpukan. Tuangkan air secara bertahap (kurang lebih 0.5 - 0.6 volume semen). Aduk cepat hingga menjadi pasta adukan beton yang kental. Jangan membuat adukan terlalu encer (banjir air) karena akan menurunkan kuat tekan beton hingga 40%.',
+        checkItems: ['Adukan kental elastis (tidak cair seperti sup)', 'Batu split terlapisi pasta semen secara merata']
+      },
+      {
+        stepNumber: 4,
+        title: 'Pengecoran & Pemadatan Manual Anti Keropos (Sarang Tawon)',
+        description: 'Tuangkan adukan beton ke dalam bekisting secara bertahap (setiap layer 30-40 cm). Tusuk-tusuk adukan dengan tongkat besi/kayu dan ketuk dinding luar bekisting dengan palu kayu agar udara terjebak keluar dan tidak terbentuk rongga keropos ("sarang tawon").',
+        schematicId: 'schematic-concrete-mix',
+        checkItems: ['Coran dipadatkan per lapisan', 'Dinding luar papan bekisting diketok merata']
+      },
+      {
+        stepNumber: 5,
+        title: 'Pembongkaran Bekisting & Perawatan Basah (Curing)',
+        description: 'Bekisting samping dapat dilepas setelah minimal 24 - 48 jam. Segera lakukan curing dengan membasahi beton atau membungkusnya dengan karung goni basah selama 3-7 hari pertama agar hidrasi semen tuntas dan beton mencapai kekuatan maksimal.',
+        checkItems: ['Beton mulus tanpa sarung tawon keropos', 'Beton disiram air minimal 2x sehari selama 3 hari']
+      }
+    ],
+    diagrams: [
+      {
+        id: 'schematic-concrete-mix',
+        title: 'Diagram Rasio Campuran 1:2:3 & Penampang Selimut Beton SNI',
+        description: 'Visualisasi takaran ember proporsional semen:pasir:split serta posisi tahu beton spacer 20mm.',
+        type: 'svg_schematic'
+      }
+    ]
+  },
+  {
+    id: 'kns-04',
+    slug: 'waterproofing-dak-beton-nok-genteng',
+    title: 'Waterproofing Dak Beton & Nok Genteng Anti Rembes (SNI)',
+    category: 'KNS',
+    categoryName: 'Konstruksi & Dinding',
+    difficulty: 'Menengah',
+    durationMinutes: 100,
+    overview: 'Metode teknis mengatasi rembesan dak beton talang air dan pertemuan wuwungan nok genteng saat musim hujan. Menerapkan pembuatan sudut lengkung chamfer 45°, penguatan serat kasa polyester mesh, dan pelapisan membran elastomerik 3 lapis silang.',
+    tags: ['Waterproofing', 'Dak Bocor', 'Talang Beton', 'Nok Genteng', 'Kasa Fiber', 'SNI 03-6861'],
+    sniStandards: [
+      {
+        code: 'SNI 03-6861.1-2002',
+        title: 'Spesifikasi Bahan Bangunan Bagian A (Bahan Bangunan Bukan Logam)',
+        summary: 'Aplikasi pelapis anti-bocor dak beton wajib diterapkan minimal 3 lapis sistem silang (cross-directional) dengan penguat serat kain polyester pada pertemuan sudut bidang 90 derajat.'
+      }
+    ],
+    safetyHazards: [
+      'Bekerja di area atap dak tinggi berisiko jatuh terpeleset bila permukaan berlumut dan licin.',
+      'Paparan terik matahari langsung menyebabkan dehidrasi.'
+    ],
+    mandatorySafetyChecklist: [
+      {
+        id: 'safe-roof-harness',
+        text: 'Pastikan Alas Sepatu Karet Tidak Licin & Siapkan Tangga Kokoh',
+        detail: 'Cek kondisi pijakan atap dak, jangan bekerja saat kondisi mendung petir atau hujan.',
+        critical: true
+      }
+    ],
+    tools: [
+      { id: 't-sikat-kawat', name: 'Sikat Kawat Baja & Kape Skrap', required: true, specification: 'Untuk mengelupas jamur & lumut kerak dak' },
+      { id: 't-roll-kuas', name: 'Roll Cat Bulu Pendek & Kuas 3 Inch', required: true },
+      { id: 't-gunting-kasa', name: 'Gunting Kasa Fiber', required: true }
+    ],
+    materials: [
+      { id: 'm-waterproofing-liquid', name: 'Cairan Waterproofing Pelapis Elastomerik 4 kg', defaultQty: 1, unit: 'pel', estimatedPriceUnit: 195000 },
+      { id: 'm-polyester-mesh', name: 'Serat Kasa Penguat (Polyester Fiber Mesh) Lebar 10-15 cm', defaultQty: 1, unit: 'roll 10m', estimatedPriceUnit: 25000 },
+      { id: 'm-semen-chamfer', name: 'Semen Pasir Instan Pembuat Sudut Fillet Chamfer', defaultQty: 1, unit: 'karung kecil', estimatedPriceUnit: 30000 }
+    ],
+    steps: [
+      {
+        stepNumber: 1,
+        title: 'Pembersihan Total Permukaan & Pengupasan Lumut',
+        description: 'Kerok semua lapisan cat lama yang terkelupas, lumut, dan jamur memakai kape besi dan sikat kawat. Siram bersih dengan air dan tunggu hingga permukaan dak beton benar-benar kering. Cat anti-bocor tidak akan menempel pada beton yang berlumut atau berminyak.',
+        checkItems: ['Beton bersih hingga pori-pori dasarnya terbuka', 'Permukaan bebas debu dan lumut hitam']
+      },
+      {
+        stepNumber: 2,
+        title: 'Pembuatan Sudut Lengkung Chamfer 45 Derajat pada Sudut 90°',
+        description: 'Pertemuan sudut tajam 90° antara lantai dak dan dinding plint adalah titik nomor 1 penyebab sobeknya lapisan waterproofing! Buat adukan semen melengkung (chamfer / fillet 45 derajat selebar 3-5 cm) di sepanjang sudut tersebut sebelum pengecatan.',
+        schematicId: 'schematic-waterproofing-plint',
+        proTip: 'Sudut tumpul 45° mendistribusikan pergerakan muai-susut bangunan sehingga membran pelapis tidak pecah.',
+        checkItems: ['Sudut mati 90 derajat sudah ditumpulkan dengan plesteran chamfer 45°']
+      },
+      {
+        stepNumber: 3,
+        title: 'Pelapisan Pertama (Primer) & Penempelan Serat Kasa Fiber Mesh',
+        description: 'Aplikasikan lapisan pertama cairan waterproofing tanpa campuran air secara tebal pada area sudut dan retakan. Dalam kondisi cat masih basah, bentangkan serat kasa fiber mesh di atasnya dan tekan dengan kuas hingga serat tenggelam menyatu ke dalam cairan cat.',
+        schematicId: 'schematic-waterproofing-plint',
+        checkItems: ['Kasa fiber menempel rata tanpa gelembung udara atau kerutan']
+      },
+      {
+        stepNumber: 4,
+        title: 'Pelapisan Lapis 2 & Lapis 3 Pola Silang (Cross-Coat)',
+        description: 'Tunggu lapis pertama mengering (sekitar 2-3 jam). Kuaskan lapisan kedua dengan arah melintang tegak lurus (90 derajat) terhadap arah lapisan pertama. Setelah kering, ulangi lapisan ketiga. Sistem silang ini menutup mikropori beton secara kedap air 100%.',
+        sniNote: 'Standar pelapisan membran kedap air mensyaratkan ketebalan kering minimum 1 mm dengan pola silang.',
+        checkItems: ['Ketiga lapisan diaplikasikan bersilang arah', 'Serat kasa tertutup sempurna tanpa bayangan putih terlihat']
+      }
+    ],
+    diagrams: [
+      {
+        id: 'schematic-waterproofing-plint',
+        title: 'Diagram Penampang Sudut Chamfer 45° & Lapisan Serat Fiber Mesh',
+        description: 'Visualisasi fillet lengkung sudut dak dinding, lapisan primer basah, penanaman kasa polyester, dan lapisan topcoat.',
+        type: 'svg_schematic'
+      }
+    ]
   }
 ];
+
+export const ALL_PROJECTS: DIYProject[] = INITIAL_PROJECTS;
+
