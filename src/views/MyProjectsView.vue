@@ -76,17 +76,32 @@
         <!-- Project Logs List -->
         <div v-if="logs.length > 0" class="logs-grid">
           <div v-for="log in logs" :key="log.id" class="log-card pt-card">
-            <!-- Photo Preview or Fallback Icon -->
+            <!-- Photo Preview (Dual Before/After or Single) or Fallback Icon -->
             <div class="log-media-header">
+              <!-- Dual Before & After -->
+              <div v-if="log.beforePhotoData && log.photoData" class="before-after-split">
+                <div class="split-pane">
+                  <img :src="log.beforePhotoData" alt="Sebelum" class="log-img-split" />
+                  <span class="split-label before-tag">Sebelum</span>
+                </div>
+                <div class="split-pane">
+                  <img :src="log.photoData" alt="Sesudah" class="log-img-split" />
+                  <span class="split-label after-tag">Sesudah</span>
+                </div>
+              </div>
+
+              <!-- Single Photo (After or Before) -->
               <img
-                v-if="log.photoData"
-                :src="log.photoData"
+                v-else-if="log.photoData || log.beforePhotoData"
+                :src="log.photoData || log.beforePhotoData"
                 alt="Dokumentasi Proyek"
                 class="log-img"
               />
+
+              <!-- Placeholder -->
               <div v-else class="log-placeholder-img">
                 <span class="placeholder-emoji">
-                  {{ log.category === 'LST' ? '⚡' : log.category === 'SAN' ? '🚰' : '🪵' }}
+                  {{ log.category === 'KNS' ? '🧱' : log.category === 'LST' ? '⚡' : log.category === 'SAN' ? '🚰' : '🪵' }}
                 </span>
                 <span class="placeholder-text">Tanpa Foto Dokumentasi</span>
               </div>
@@ -281,5 +296,51 @@ const handleImportBackup = async (e: Event) => {
 };
 </script>
 
-<style></style>
+<style scoped>
+.before-after-split {
+  display: flex;
+  width: 100%;
+  height: 160px;
+  position: relative;
+}
+
+.split-pane {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.split-pane:first-child {
+  border-right: 2px solid #ffffff;
+}
+
+.log-img-split {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.split-label {
+  position: absolute;
+  bottom: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.before-tag {
+  left: 8px;
+  background: rgba(15, 23, 42, 0.75);
+  color: #f1f5f9;
+}
+
+.after-tag {
+  right: 8px;
+  background: #059669;
+  color: #ffffff;
+}
+</style>
 

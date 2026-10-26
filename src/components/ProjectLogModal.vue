@@ -33,9 +33,10 @@
             <div class="form-group">
               <label class="form-label">Kategori</label>
               <select v-model="form.category" class="form-select">
-                <option value="LST">Kelistrikan (LST)</option>
-                <option value="SAN">Sanitasi & Pipa (SAN)</option>
-                <option value="KAY">Perkayuan & Mebel (KAY)</option>
+                <option value="KNS">🧱 Konstruksi & Dinding (KNS)</option>
+                <option value="LST">⚡ Kelistrikan (LST)</option>
+                <option value="SAN">🚰 Sanitasi & Pipa (SAN)</option>
+                <option value="KAY">🪵 Perkayuan & Mebel (KAY)</option>
               </select>
             </div>
 
@@ -76,26 +77,39 @@
             </div>
           </div>
 
-          <!-- Dokumentasi Foto -->
-          <div class="form-group">
-            <label class="form-label">Foto Hasil Pengerjaan</label>
-            <div class="photo-upload-container">
-              <div v-if="form.photoData" class="photo-preview-box">
-                <img :src="form.photoData" alt="Foto Proyek DIY" class="photo-preview" />
-                <button type="button" class="remove-photo-btn" @click="form.photoData = ''">
-                  ✕ Hapus Foto
-                </button>
-              </div>
-
-              <div v-else class="upload-trigger-box" @click="handleTakePhoto">
-                <div class="upload-icon">
-                  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                  </svg>
+          <!-- Dokumentasi Foto Sebelum & Sesudah -->
+          <div class="form-row photos-dual-row">
+            <!-- Foto Sebelum (Before) -->
+            <div class="form-group">
+              <label class="form-label">Foto Sebelum (Kondisi Awal)</label>
+              <div class="photo-upload-container">
+                <div v-if="form.beforePhotoData" class="photo-preview-box">
+                  <img :src="form.beforePhotoData" alt="Foto Sebelum" class="photo-preview" />
+                  <button type="button" class="remove-photo-btn" @click="form.beforePhotoData = ''">
+                    ✕ Hapus
+                  </button>
                 </div>
-                <span class="upload-text">Ambil Foto / Unggah dari Perangkat</span>
-                <span class="upload-subtext">Tersimpan aman di IndexedDB lokal</span>
+                <div v-else class="upload-trigger-box mini-upload" @click="handleTakeBeforePhoto">
+                  <span class="upload-icon">📷</span>
+                  <span class="upload-text">Unggah Foto Sebelum</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Foto Sesudah (After) -->
+            <div class="form-group">
+              <label class="form-label">Foto Hasil Selesai (After)</label>
+              <div class="photo-upload-container">
+                <div v-if="form.photoData" class="photo-preview-box">
+                  <img :src="form.photoData" alt="Foto Selesai" class="photo-preview" />
+                  <button type="button" class="remove-photo-btn" @click="form.photoData = ''">
+                    ✕ Hapus
+                  </button>
+                </div>
+                <div v-else class="upload-trigger-box mini-upload" @click="handleTakePhoto">
+                  <span class="upload-icon">✨</span>
+                  <span class="upload-text">Unggah Foto Selesai</span>
+                </div>
               </div>
             </div>
           </div>
@@ -167,6 +181,7 @@ const form = reactive({
   totalCost: 50000,
   userNotes: '',
   photoData: '',
+  beforePhotoData: '',
   rating: 5,
 });
 
@@ -184,6 +199,7 @@ watch(
         form.totalCost = props.editingLog.totalCost;
         form.userNotes = props.editingLog.userNotes;
         form.photoData = props.editingLog.photoData || '';
+        form.beforePhotoData = props.editingLog.beforePhotoData || '';
         form.rating = props.editingLog.rating || 5;
       } else {
         form.id = 'log-' + Date.now();
@@ -195,12 +211,21 @@ watch(
         form.totalCost = 50000;
         form.userNotes = '';
         form.photoData = '';
+        form.beforePhotoData = '';
         form.rating = 5;
       }
     }
   },
   { immediate: true }
 );
+
+const handleTakeBeforePhoto = async () => {
+  const photo = await NativeService.captureOrPickPhoto();
+  if (photo) {
+    form.beforePhotoData = photo;
+    NativeService.triggerHapticFeedback('success');
+  }
+};
 
 const handleTakePhoto = async () => {
   const photo = await NativeService.captureOrPickPhoto();
@@ -225,6 +250,7 @@ const handleSubmit = () => {
     totalCost: form.totalCost || 0,
     userNotes: form.userNotes.trim(),
     photoData: form.photoData,
+    beforePhotoData: form.beforePhotoData,
     rating: form.rating,
     completedSteps: props.editingLog?.completedSteps || [],
   };
@@ -234,5 +260,15 @@ const handleSubmit = () => {
 };
 </script>
 
-<style></style>
+<style scoped>
+.mini-upload {
+  padding: 12px !important;
+}
+.mini-upload .upload-icon {
+  font-size: 20px;
+}
+.mini-upload .upload-text {
+  font-size: 11px !important;
+}
+</style>
 

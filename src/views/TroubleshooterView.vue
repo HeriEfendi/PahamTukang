@@ -127,6 +127,12 @@
               Semua Masalah
             </button>
             <button
+              :class="['cat-tab', { 'active': selectedCategory === 'KNS' }]"
+              @click="selectedCategory = 'KNS'"
+            >
+              🧱 Konstruksi SNI
+            </button>
+            <button
               :class="['cat-tab', { 'active': selectedCategory === 'LST' }]"
               @click="selectedCategory = 'LST'"
             >
@@ -230,12 +236,14 @@ const dangerLevelClass = (level: string) => {
 };
 
 const getCatBadgeClass = (cat: ProjectCategory) => {
+  if (cat === 'KNS') return 'badge-kns';
   if (cat === 'LST') return 'badge-lst';
   if (cat === 'SAN') return 'badge-san';
   return 'badge-kay';
 };
 
 const getCatLabel = (cat: ProjectCategory) => {
+  if (cat === 'KNS') return 'Konstruksi & Dinding';
   if (cat === 'LST') return 'Kelistrikan';
   if (cat === 'SAN') return 'Sanitasi & Pipa';
   return 'Perkayuan & Mebel';

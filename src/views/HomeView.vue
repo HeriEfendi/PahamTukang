@@ -25,12 +25,12 @@
                 <span class="stat-label">Panduan Master</span>
               </div>
               <div class="stat-pill">
-                <span class="stat-num">3</span>
-                <span class="stat-label">Kategori Inti</span>
+                <span class="stat-num">4</span>
+                <span class="stat-label">Kategori SNI & DIY</span>
               </div>
               <div class="stat-pill">
-                <span class="stat-num">0</span>
-                <span class="stat-label">Koneksi Diperlukan</span>
+                <span class="stat-num">100%</span>
+                <span class="stat-label">Offline Lokal</span>
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@
         <div class="catalog-section">
           <div class="section-title-row">
             <div>
-              <h2 class="section-title">Katalog Panduan DIY</h2>
+              <h2 class="section-title">Katalog Panduan DIY & Konstruksi</h2>
               <p class="section-sub">Pilih panduan langkah kerja teruji sesuai kebutuhan rumah Anda.</p>
             </div>
           </div>
@@ -90,7 +90,7 @@
               v-model="searchQuery"
               type="text"
               class="search-input"
-              placeholder="Cari proyek (contoh: saklar, stop kontak, kran bocor, ambalan)..."
+              placeholder="Cari proyek (contoh: saklar, retak dinding, hebel, cor beton, kran)..."
             />
             <button v-if="searchQuery" class="clear-search-btn" @click="searchQuery = ''">✕</button>
           </div>
@@ -103,6 +103,12 @@
                 @click="selectedCategory = 'ALL'"
               >
                 Semua Kategori
+              </button>
+              <button
+                :class="['filter-pill', { 'active': selectedCategory === 'KNS' }]"
+                @click="selectedCategory = 'KNS'"
+              >
+                🧱 Konstruksi SNI (KNS)
               </button>
               <button
                 :class="['filter-pill', { 'active': selectedCategory === 'LST' }]"

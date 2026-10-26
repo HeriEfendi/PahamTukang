@@ -6,6 +6,9 @@
           <span class="cat-icon">{{ categoryIcon }}</span>
           {{ project.categoryName }}
         </span>
+        <span v-if="project.sniStandards && project.sniStandards.length > 0" class="pt-badge badge-sni-verified">
+          🇮🇩 SNI
+        </span>
         <span :class="['pt-badge', difficultyBadgeClass]">
           {{ project.difficulty }}
         </span>
@@ -63,6 +66,7 @@ const categoryBadgeClass = computed(() => {
     case 'LST': return 'badge-lst';
     case 'SAN': return 'badge-san';
     case 'KAY': return 'badge-kay';
+    case 'KNS': return 'badge-kns';
     default: return '';
   }
 });
@@ -72,6 +76,7 @@ const categoryIcon = computed(() => {
     case 'LST': return '⚡';
     case 'SAN': return '🚰';
     case 'KAY': return '🪵';
+    case 'KNS': return '🧱';
     default: return '🛠️';
   }
 });
