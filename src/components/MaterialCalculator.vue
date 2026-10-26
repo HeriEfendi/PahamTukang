@@ -19,6 +19,11 @@
         <div>
           <h4 class="calc-title">{{ config.title }}</h4>
           <p class="calc-desc">{{ config.description }}</p>
+          <div v-if="config.sniReference" class="calc-sni-badge">
+            <span class="flag-icon">🇮🇩</span>
+            <span class="sni-badge-code">{{ config.sniReference.code }}</span>
+            <span class="sni-badge-title">{{ config.sniReference.title }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -244,6 +249,158 @@ const calculatedResults = computed(() => {
     });
 
     totalCost = bracketCost + fischerCost;
+  } else if (formula === 'wall_plaster_ahsp') {
+    const area = Number(paramValues['wall_area'] || 12);
+    const thickMm = Number(paramValues['plaster_thickness'] || 15);
+    const thickM = thickMm / 1000;
+    const ratioMode = Number(paramValues['mortar_ratio'] || 2); // 1=1:3, 2=1:4, 3=1:5
+
+    const volumeM3 = area * thickM * 1.1; // 10% toleransi jatuh
+    let cementBags50kg = volumeM3 * 6.24;
+    let sandM3 = volumeM3 * 0.83;
+
+    if (ratioMode === 1) {
+      cementBags50kg = volumeM3 * 7.8;
+      sandM3 = volumeM3 * 0.78;
+    } else if (ratioMode === 3) {
+      cementBags50kg = volumeM3 * 5.1;
+      sandM3 = volumeM3 * 0.88;
+    }
+
+    const acianSemenKg = area * 3.25;
+    const acianBags40kg = Math.max(1, Math.ceil(acianSemenKg / 40));
+    const finalCementBags = Math.max(1, Math.ceil(cementBags50kg));
+    const finalSandKarung = Math.max(2, Math.ceil(sandM3 * 25));
+
+    const costCement = finalCementBags * 58000;
+    const costSand = finalSandKarung * 18000;
+    const costAcian = acianBags40kg * 75000;
+
+    items.push({
+      name: 'Semen Portland PCC (50 kg)',
+      quantity: `${finalCementBags} Sak`,
+      estimatedCost: costCement,
+      subtext: `Standar SNI Rasio 1:${ratioMode === 1 ? '3' : ratioMode === 3 ? '5' : '4'} tebal ${thickMm}mm`,
+    });
+
+    items.push({
+      name: 'Pasir Pasang Ayak Halus',
+      quantity: `${finalSandKarung} Karung (${sandM3.toFixed(2)} m³)`,
+      estimatedCost: costSand,
+      subtext: 'Bebas kandungan lumpur organik',
+    });
+
+    items.push({
+      name: 'Semen Instan Acian Siap Pakai (40 kg)',
+      quantity: `${acianBags40kg} Sak`,
+      estimatedCost: costAcian,
+      subtext: `Menutup ${area} m² acian tebal 1.5-2 mm`,
+    });
+
+    totalCost = costCement + costSand + costAcian;
+  } else if (formula === 'hebel_aac_block') {
+    const length = Number(paramValues['wall_length'] || 3.5);
+    const height = Number(paramValues['wall_height'] || 2.8);
+    const thicknessType = Number(paramValues['block_thickness'] || 1);
+
+    const areaM2 = length * height;
+    const blocksNeeded = Math.ceil(areaM2 * 8.33 * 1.05);
+    const mortarKg = areaM2 * (thicknessType === 1 ? 4.0 : 4.8);
+    const mortarBags40kg = Math.max(1, Math.ceil(mortarKg / 40));
+
+    const pricePerBlock = thicknessType === 1 ? 9000 : 11500;
+    const costBlocks = blocksNeeded * pricePerBlock;
+    const costMortar = mortarBags40kg * 72000;
+
+    items.push({
+      name: `Bata Ringan Hebel AAC (Tebal ${thicknessType === 1 ? '7.5' : '10'} cm)`,
+      quantity: `${blocksNeeded} Keping (${(blocksNeeded / 111).toFixed(2)} m³)`,
+      estimatedCost: costBlocks,
+      subtext: `Luas dinding ${areaM2.toFixed(1)} m² (termasuk toleransi 5%)`,
+    });
+
+    items.push({
+      name: 'Semen Mortar Thinbed Perekat (40 kg)',
+      quantity: `${mortarBags40kg} Sak`,
+      estimatedCost: costMortar,
+      subtext: 'Aplikasi roskam bergigi ketebalan spesi 3 mm',
+    });
+
+    totalCost = costBlocks + costMortar;
+  } else if (formula === 'concrete_k175_mix') {
+    const lenM = Number(paramValues['concrete_length'] || 3.0);
+    const widthM = Number(paramValues['concrete_width'] || 15) / 100;
+    const thickM = Number(paramValues['concrete_thickness'] || 15) / 100;
+
+    const volumeM3 = lenM * widthM * thickM * 1.1;
+
+    const cementBags50kg = Math.max(1, Math.ceil(volumeM3 * 6.5));
+    const sandKarung = Math.max(2, Math.ceil(volumeM3 * 0.54 * 25));
+    const splitKarung = Math.max(3, Math.ceil(volumeM3 * 0.76 * 25));
+
+    const costCement = cementBags50kg * 68000;
+    const costSand = sandKarung * 22000;
+    const costSplit = splitKarung * 25000;
+
+    items.push({
+      name: 'Semen Portland PCC 50 kg',
+      quantity: `${cementBags50kg} Sak`,
+      estimatedCost: costCement,
+      subtext: 'Takaran lapangan: 1 Bagian Ember',
+    });
+
+    items.push({
+      name: 'Pasir Cor Kasar Hitam',
+      quantity: `${sandKarung} Karung`,
+      estimatedCost: costSand,
+      subtext: 'Takaran lapangan: 2 Bagian Ember',
+    });
+
+    items.push({
+      name: 'Batu Split / Kerikil 1-2 cm',
+      quantity: `${splitKarung} Karung`,
+      estimatedCost: costSplit,
+      subtext: 'Takaran lapangan: 3 Bagian Ember',
+    });
+
+    totalCost = costCement + costSand + costSplit;
+  } else if (formula === 'electrical_load_puil') {
+    const totalWatt = Number(paramValues['total_watt'] || 1300);
+    const wireDistM = Number(paramValues['wire_distance'] || 10);
+    const voltage = 220; // Standar PLN 220V
+    const currentAmp = totalWatt / voltage;
+
+    let mcbAmp = 4;
+    if (currentAmp > 16) mcbAmp = 25;
+    else if (currentAmp > 10) mcbAmp = 16;
+    else if (currentAmp > 6) mcbAmp = 10;
+    else if (currentAmp > 4) mcbAmp = 6;
+
+    let wireSpec = 'NYM 3 x 1.5 mm²';
+    let wirePricePerM = 12000;
+    if (mcbAmp >= 16) {
+      wireSpec = 'NYM 3 x 2.5 mm²';
+      wirePricePerM = 17500;
+    }
+
+    const wireCost = wireDistM * wirePricePerM;
+    const mcbCost = 45000;
+
+    items.push({
+      name: `Kabel Tembaga ${wireSpec} (Standar PUIL 2020)`,
+      quantity: `${wireDistM} Meter`,
+      estimatedCost: wireCost,
+      subtext: `Kapasitas beban arus ${currentAmp.toFixed(1)} Ampere (Daya ${totalWatt}W)`,
+    });
+
+    items.push({
+      name: `MCB Box Pembatas ${mcbAmp} Ampere (SNI)`,
+      quantity: `1 Buah`,
+      estimatedCost: mcbCost,
+      subtext: `Rating trip aman untuk daya ${totalWatt} Watt`,
+    });
+
+    totalCost = wireCost + mcbCost;
   } else {
     // default / door repair
     const height = paramValues['door_height'] || 120;

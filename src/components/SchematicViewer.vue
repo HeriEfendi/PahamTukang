@@ -276,6 +276,102 @@
         <text x="485" y="240" fill="#10b981" font-size="11" font-weight="bold" text-anchor="middle">Baut 3: Naik/Turun</text>
       </svg>
 
+      <!-- 9. Buka Celah Alur V & Plester Aci (SNI 03-2835) -->
+      <svg v-else-if="schematicId === 'schematic-wall-crack-v'" viewBox="0 0 700 360" class="diagram-svg">
+        <defs>
+          <linearGradient id="grad-brick" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#b45309" />
+            <stop offset="100%" stop-color="#78350f" />
+          </linearGradient>
+          <linearGradient id="grad-plaster" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#94a3b8" />
+            <stop offset="100%" stop-color="#64748b" />
+          </linearGradient>
+        </defs>
+        <rect width="700" height="360" rx="12" fill="#0d1424" />
+        <rect x="50" y="70" width="600" height="220" rx="6" fill="url(#grad-brick)" stroke="#d97706" stroke-width="2" />
+        <rect x="50" y="70" width="600" height="30" fill="url(#grad-plaster)" />
+        <text x="70" y="90" fill="#f8fafc" font-size="12" font-weight="bold">Plesteran Lama</text>
+        <text x="70" y="160" fill="#fed7aa" font-size="14" font-weight="bold">Dinding Bata / Hebel</text>
+        <polygon points="350,70 310,180 390,180" fill="#1e293b" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4,4" />
+        <polygon points="350,70 325,160 375,160" fill="#38bdf8" opacity="0.85" />
+        <line x1="220" y1="120" x2="320" y2="120" stroke="#f8fafc" stroke-width="2" />
+        <text x="130" y="115" fill="#f8fafc" font-size="13" font-weight="bold">Alur Pahat "V" (45°)</text>
+        <text x="130" y="132" fill="#94a3b8" font-size="11">Lebar 1.5 cm, Dalam 1.5 cm</text>
+        <line x1="480" y1="120" x2="365" y2="120" stroke="#f59e0b" stroke-width="2" />
+        <text x="490" y="115" fill="#f59e0b" font-size="13" font-weight="bold">Isian Plester SNI 1:4</text>
+        <text x="490" y="132" fill="#94a3b8" font-size="11">+ Lem Bonding Agent Perekat</text>
+        <rect x="290" y="66" width="120" height="8" rx="2" fill="#34d399" />
+        <text x="350" y="55" fill="#34d399" font-size="12" font-weight="bold" text-anchor="middle">Acian Tebal 1.5 - 2 mm</text>
+      </svg>
+
+      <!-- 10. Pemasangan Hebel & Roskam Gerigi (SNI 03-6882) -->
+      <svg v-else-if="schematicId === 'schematic-hebel-mortar'" viewBox="0 0 700 360" class="diagram-svg">
+        <rect width="700" height="360" rx="12" fill="#0d1424" />
+        <rect x="60" y="210" width="280" height="85" rx="4" fill="#334155" stroke="#94a3b8" stroke-width="2" />
+        <rect x="350" y="210" width="290" height="85" rx="4" fill="#334155" stroke="#94a3b8" stroke-width="2" />
+        <text x="200" y="260" fill="#f8fafc" font-size="14" font-weight="bold">Hebel Blok A</text>
+        <text x="490" y="260" fill="#f8fafc" font-size="14" font-weight="bold">Hebel Blok B</text>
+        <path d="M 60 205 Q 80 198 100 205 T 140 205 T 180 205 T 220 205 T 260 205 T 300 205 T 340 205 T 380 205 T 420 205 T 460 205 T 500 205 T 540 205 T 580 205 T 620 205 T 640 205" fill="none" stroke="#f59e0b" stroke-width="6" stroke-linecap="round" />
+        <text x="350" y="195" fill="#f59e0b" font-size="12" font-weight="bold" text-anchor="middle">Alur Mortar Thinbed 3 mm (Roskam Gerigi 6 mm)</text>
+        <rect x="200" y="105" width="300" height="85" rx="4" fill="#475569" stroke="#cbd5e1" stroke-width="2" />
+        <text x="350" y="155" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle">Hebel Blok C (Overlap min 15 cm)</text>
+        <rect x="40" y="140" width="90" height="15" rx="2" fill="#ef4444" stroke="#f8fafc" stroke-width="1.5" />
+        <circle cx="55" cy="147" r="4" fill="#f8fafc" />
+        <text x="85" y="130" fill="#f87171" font-size="11" font-weight="bold">Plat Angkur L</text>
+        <text x="85" y="170" fill="#94a3b8" font-size="10">Paku ke Kolom tiap 60 cm</text>
+      </svg>
+
+      <!-- 11. Rasio Cor Beton K-175 & Selimut Beton SNI (SNI 2847) -->
+      <svg v-else-if="schematicId === 'schematic-concrete-mix'" viewBox="0 0 700 360" class="diagram-svg">
+        <rect width="700" height="360" rx="12" fill="#0d1424" />
+        <g transform="translate(40, 50)">
+          <rect x="10" y="40" width="60" height="80" rx="6" fill="#64748b" stroke="#f8fafc" stroke-width="1.5" />
+          <text x="40" y="145" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">1 Ember</text>
+          <text x="40" y="160" fill="#cbd5e1" font-size="11" text-anchor="middle">Semen PC</text>
+          <text x="90" y="90" fill="#f59e0b" font-size="24" font-weight="bold">+</text>
+          <rect x="115" y="40" width="60" height="80" rx="6" fill="#d97706" />
+          <rect x="185" y="40" width="60" height="80" rx="6" fill="#d97706" />
+          <text x="180" y="145" fill="#f59e0b" font-size="12" font-weight="bold" text-anchor="middle">2 Ember</text>
+          <text x="180" y="160" fill="#fed7aa" font-size="11" text-anchor="middle">Pasir Cor Kasar</text>
+          <text x="265" y="90" fill="#f59e0b" font-size="24" font-weight="bold">+</text>
+          <rect x="290" y="40" width="55" height="80" rx="6" fill="#475569" />
+          <rect x="355" y="40" width="55" height="80" rx="6" fill="#475569" />
+          <rect x="420" y="40" width="55" height="80" rx="6" fill="#475569" />
+          <text x="382" y="145" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">3 Ember</text>
+          <text x="382" y="160" fill="#bae6fd" font-size="11" text-anchor="middle">Batu Split 1-2 cm</text>
+        </g>
+        <g transform="translate(520, 70)">
+          <rect x="0" y="0" width="140" height="140" fill="#1e293b" stroke="#e2e8f0" stroke-width="3" />
+          <text x="70" y="-10" fill="#94a3b8" font-size="11" text-anchor="middle">Papan Bekisting</text>
+          <rect x="5" y="5" width="130" height="130" fill="#334155" />
+          <rect x="25" y="25" width="90" height="90" fill="none" stroke="#ef4444" stroke-width="4" rx="4" />
+          <circle cx="25" cy="25" r="7" fill="#ef4444" />
+          <circle cx="115" cy="25" r="7" fill="#ef4444" />
+          <circle cx="25" cy="115" r="7" fill="#ef4444" />
+          <circle cx="115" cy="115" r="7" fill="#ef4444" />
+          <rect x="5" y="60" width="20" height="20" fill="#34d399" />
+          <text x="70" y="170" fill="#34d399" font-size="12" font-weight="bold" text-anchor="middle">Selimut Beton 20 mm</text>
+          <text x="70" y="188" fill="#94a3b8" font-size="10" text-anchor="middle">(Ganjal Tahu Beton SNI)</text>
+        </g>
+      </svg>
+
+      <!-- 12. Sudut Chamfer 45° & Kasa Fiber Waterproofing (SNI 03-6861) -->
+      <svg v-else-if="schematicId === 'schematic-waterproofing-plint'" viewBox="0 0 700 360" class="diagram-svg">
+        <rect width="700" height="360" rx="12" fill="#0d1424" />
+        <polygon points="120,50 200,50 200,220 580,220 580,290 120,290" fill="#1e293b" stroke="#475569" stroke-width="3" />
+        <text x="160" y="120" fill="#f8fafc" font-size="13" font-weight="bold">Dinding Plint</text>
+        <text x="380" y="260" fill="#f8fafc" font-size="14" font-weight="bold">Lantai Plat Dak Beton</text>
+        <polygon points="200,170 200,220 250,220" fill="#f59e0b" stroke="#d97706" stroke-width="2" />
+        <text x="260" y="185" fill="#f59e0b" font-size="12" font-weight="bold">Sudut Chamfer 45°</text>
+        <text x="260" y="202" fill="#fed7aa" font-size="10">(Cegah Membran Pecah di Sudut 90°)</text>
+        <path d="M 195 120 L 195 170 L 250 225 L 360 225" fill="none" stroke="#38bdf8" stroke-width="4" stroke-dasharray="6,4" />
+        <text x="365" y="150" fill="#38bdf8" font-size="12" font-weight="bold">Serat Kasa Polyester Mesh</text>
+        <text x="365" y="167" fill="#94a3b8" font-size="10">Ditanam di antara lapis 1 & 2</text>
+        <path d="M 190 90 L 190 170 L 255 230 L 440 230" fill="none" stroke="#059669" stroke-width="5" stroke-linecap="round" />
+        <text x="445" y="210" fill="#34d399" font-size="12" font-weight="bold">Waterproofing 3 Lapis Silang</text>
+      </svg>
+
       <!-- Fallback Default Generic Schematic -->
       <svg v-else viewBox="0 0 700 300" class="diagram-svg">
         <rect x="0" y="0" width="700" height="300" rx="12" fill="#0d1424" />
